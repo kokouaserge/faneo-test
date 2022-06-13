@@ -210,13 +210,14 @@ function LoginCover() {
                   onClick={() => dispatch(changeRoute({ route: "register" }))}
                 >
                   {" "}
-                  <b>Crée un compte</b>{" "}
+                  <b>Créer un compte</b>{" "}
                 </a>
               </Box>
 
               <Tooltip title={"Utilisé pour la démo"}>
                 <Alert severity="warning">
-                  utiliser <b>Sincere@april.biz</b> and password <b>123456</b>
+                  utiliser <b>Sincere@april.biz</b> et comme mot de passe{" "}
+                  <b>123456</b>
                 </Alert>
               </Tooltip>
             </Card>

@@ -17,6 +17,7 @@ import useRefMounted from "../../../../hooks/useRefMounted";
 import { useDispatch, useSelector } from "../../../../store/index";
 import { loginMock } from "../../../../hooks/useAuth";
 import { AppState } from "../../../../types/AppState";
+import { changeRoute } from "../../../../slices/auth";
 
 const LoginJWT = () => {
   const isMountedRef = useRefMounted();
@@ -129,9 +130,13 @@ const LoginJWT = () => {
                 </>
               }
             />
-            <Link href="/recovery">
-              <a>Mot de passe Oublié ?</a>
-            </Link>
+
+            <a
+              href="#"
+              onClick={() => dispatch(changeRoute({ route: "recovery" }))}
+            >
+              Mot de passe Oublié ?
+            </a>
           </Box>
 
           {Boolean(touched.terms && errors.terms) && (
