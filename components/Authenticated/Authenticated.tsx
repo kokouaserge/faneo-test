@@ -17,7 +17,7 @@ const Authenticated = (props: AuthificatedInterface) => {
     (state: AppState) => state.auth
   );
 
-  if (!isAuthenticated && router.pathname !== "/recovery") {
+  if (!isAuthenticated) {
     if (route === "login") return <LoginCover />;
 
     if (route === "recovery") return <RecoveryPassword />;
