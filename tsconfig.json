@@ -15,6 +15,14 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "theme/shemes/PurpleFlowTheme.js",
+    "theme/shemes/PureLightTheme.js",
+    "theme/shemes/GreyGooseTheme.js",
+    "theme/shemes/GreyGooseTheme.js"
+  ],
   "exclude": ["node_modules"]
 }
