@@ -1,24 +1,21 @@
-import AssignmentIndTwoToneIcon from "@mui/icons-material/AssignmentIndTwoTone";
-import AccountTreeTwoToneIcon from "@mui/icons-material/AccountTreeTwoTone";
-export interface menuItemInterface {
-  name: string;
-  link: string;
-  icons: string;
-}
+import BackupTableTwoToneIcon from "@mui/icons-material/BackupTableTwoTone";
 
 const menuItems = [
   {
-    heading: "Gestion",
+    heading: "General",
     items: [
       {
-        name: "Users",
-        icon: AssignmentIndTwoToneIcon,
-        link: "/users",
-      },
-      {
-        name: "Posts",
-        icon: AccountTreeTwoToneIcon,
-        link: "/posts",
+        name: "Articles",
+        icon: BackupTableTwoToneIcon,
+        link: "",
+        items: [
+          {
+            name: "Extended sidebar",
+            link: "/extended-sidebar/dashboards",
+            badge: "v3.0",
+            badgeTooltip: "Added in version 3.0",
+          },
+        ],
       },
     ],
   },

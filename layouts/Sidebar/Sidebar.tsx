@@ -1,264 +1,83 @@
-import {
-  ListSubheader,
-  Box,
-  alpha,
-  darken,
-  lighten,
-  List,
-  styled,
-} from "@mui/material";
-import { useRouter } from "next/router";
+import Logo from "../../components/Logo/Logo";
+import { Box, Card, Drawer, styled, useTheme } from "@mui/material";
+import SidebarMenu from "./SidebarMenu";
+import { useSelector, useDispatch } from "../../store/index";
+import { AppState } from "../../types/AppState";
+import { toggleSidebar } from "../../slices/sidebar";
 
-import SidebarMenuItem from "./SidebarMenuItem";
-import menuItems, { menuItemInterface } from "./menuItems";
-
-const MenuWrapper = styled(Box)(
-  ({ theme }) => `
-  .MuiList-root {
-    margin-bottom: ${theme.spacing(1.5)};
-    padding: 0;
-
-    & > .MuiList-root {
-      padding: 0 ${theme.spacing(0)} ${theme.spacing(1)};
-    }
-  }
-
-    .MuiListSubheader-root {
-      text-transform: uppercase;
-      font-weight: bold;
-      font-size: ${theme.typography.pxToRem(12)};
-      color: ${theme.sidebar.menuItemIconColor};
-      padding: ${theme.spacing(1, 3.5)};
-      line-height: 1.4;
+const SidebarWrapper = styled(Card)(
+  ({ theme }: any) => `
+    width: ${theme.sidebar.width};
+    background: ${theme.sidebar.background};
+    height: 100%;
+    
+    @media (min-width: ${theme.breakpoints.values.lg}px) {
+        position: fixed;
+        height: calc(100% - ${theme.spacing(8)});
+        margin: ${theme.spacing(4, 0, 4, 4)};
+        z-index: 10;
+        border-radius: ${theme.general.borderRadius};
     }
 `
 );
 
-const SubMenuWrapper = styled(Box)(
+const TopSection = styled(Box)(
   ({ theme }) => `
-    .MuiList-root {
-      padding: 0;
-
-      .MuiListItem-root {
-        padding: 1px ${theme.spacing(2)};
-    
-        .MuiButton-root {
-          display: flex;
-          color: ${theme.sidebar.menuItemColor};
-          background-color: ${theme.sidebar.menuItemBg};
-          width: 100%;
-          justify-content: flex-start;
-          padding: ${theme.spacing(1, 2)};
-          position: relative;
-
-          .MuiBadge-root {
-            position: absolute;
-            right: ${theme.spacing(3.5)};
-
-            .MuiBadge-standard {
-              background: ${theme.colors.primary.main};
-              border-radius: ${theme.general.borderRadiusSm};
-              font-size: ${theme.typography.pxToRem(10)};
-              font-weight: bold;
-              text-transform: uppercase;
-              color: ${theme.palette.primary.contrastText};
-            }
-          }
-    
-          .MuiButton-startIcon,
-          .MuiButton-endIcon {
-            transition: ${theme.transitions.create(["color"])};
-
-            .MuiSvgIcon-root {
-              font-size: inherit;
-              transition: none;
-            }
-          }
-
-          .MuiButton-startIcon {
-            transition: ${theme.transitions.create(["all"])};
-            border-radius: ${theme.general.borderRadius};
-            background: ${lighten(theme.sidebar.menuItemBgActive, 0.1)};
-            box-shadow: 0px 1px 2px 0 ${alpha(
-              darken(theme.sidebar.menuItemIconColor, 0.2),
-              0.46
-            )};
-            font-size: ${theme.typography.pxToRem(18)};
-            margin-right: ${theme.spacing(1.5)};
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: ${
-              theme.palette.mode === "dark"
-                ? lighten(theme.sidebar.menuItemBgActive, 0.8)
-                : theme.sidebar.menuItemIconColor
-            };
-          }
-          
-          .MuiButton-endIcon {
-            margin-left: auto;
-            font-size: ${theme.typography.pxToRem(20)};
-          }
-          
-          .MuiButton-StartIcon {
-            font-size: ${theme.typography.pxToRem(20)};
-          }
-
-          &.Mui-active,
-          &:hover {
-            color: ${theme.sidebar.menuItemColorActive};
-
-            .MuiButton-startIcon,
-            .MuiButton-endIcon {
-                color: ${theme.sidebar.menuItemColorActive};
-            }
-          }
-
-          &.Mui-active {
-            background-color: ${alpha(theme.sidebar.menuItemBgActive, 0.8)};
-            box-shadow: 0px 1px 2px 0 ${alpha(
-              darken(theme.sidebar.menuItemIconColor, 0.2),
-              0.46
-            )};
-            color: ${theme.sidebar.menuItemColorActive};
-            font-weight: bold;
-
-
-            .MuiButton-startIcon {
-                background: ${theme.colors.primary.main};
-                color: ${theme.palette.primary.contrastText};
-            }
-          }
-        }
-
-        &.Mui-children {
-          flex-direction: column;
-
-          .MuiBadge-root {
-            position: absolute;
-            right: ${theme.spacing(6)};
-          }
-        }
-
-        .MuiCollapse-root {
-          width: 100%;
-
-          .MuiList-root {
-            padding: ${theme.spacing(1.5, 0)};
-          }
-
-          .MuiListItem-root {
-            padding: ${theme.spacing(0)};
-
-            .MuiButton-root {
-              padding: ${theme.spacing(0.7, 2, 0.7, 7)};
-
-              .MuiBadge-root {
-                right: ${theme.spacing(2.5)};
-              }
-
-              &.Mui-active,
-              &:hover {
-                box-shadow: none;
-                background-color: ${theme.sidebar.menuItemBg};
-              }
-            }
-          }
-        }
-      }
-    }
+        display: flex;
+        height: 80px;
+        align-items: center;
+        margin: 0 ${theme.spacing(2)};
+        border-bottom: ${theme.sidebar.dividerBg} solid 1px;
 `
 );
 
-interface sidebarMenuItems {
-  items: any;
-  path: string;
-  router: object;
-}
-
-const renderSidebarMenuItems = ({ items, path, router }: sidebarMenuItems) => (
-  <SubMenuWrapper>
-    <List component="div">
-      {items.reduce(
-        (ev: object, item: object) =>
-          reduceChildRoutes({ ev, item, path, router }),
-        []
-      )}
-    </List>
-  </SubMenuWrapper>
-);
-
-const reduceChildRoutes = ({ ev, path, item, router }: any) => {
-  const key = item.name;
-
-  const exactMatch = item.link && router.asPath === item.link ? true : false;
-
-  if (item.items) {
-    const partialMatch =
-      item.link && router.asPath === item.link ? true : false;
-
-    ev.push(
-      <SidebarMenuItem
-        key={key}
-        active={partialMatch}
-        open={partialMatch}
-        name={item.name}
-        icon={item.icon}
-        link={item.link}
-        badge={item.badge}
-        badgeTooltip={item.badgeTooltip}
-      >
-        {renderSidebarMenuItems({
-          path,
-          items: item.items,
-          router,
-        })}
-      </SidebarMenuItem>
-    );
-  } else {
-    ev.push(
-      <SidebarMenuItem
-        key={key}
-        active={exactMatch}
-        name={item.name}
-        link={item.link}
-        badge={item.badge}
-        badgeTooltip={item.badgeTooltip}
-        icon={item.icon}
-      />
-    );
-  }
-
-  return ev;
-};
-
-function SidebarMenu() {
-  const router = useRouter();
+function Sidebar() {
+  const theme: any = useTheme();
+  const { sidebarToggle } = useSelector((state: AppState) => state.sidebar);
+  const dispatch = useDispatch();
+  const closeSidebar = () => {
+    dispatch(toggleSidebar());
+  };
 
   return (
     <>
-      {menuItems.map((section) => (
-        <MenuWrapper key={section.heading}>
-          <List
-            component="div"
-            subheader={
-              <ListSubheader component="div" disableSticky>
-                {section.heading}
-              </ListSubheader>
-            }
-          >
-            {renderSidebarMenuItems({
-              items: section.items,
-              path: router.pathname,
-              router,
-            })}
-          </List>
-        </MenuWrapper>
-      ))}
+      <SidebarWrapper
+        sx={{
+          display: { xs: "none", lg: "inline-block" },
+        }}
+      >
+        <TopSection>
+          <Logo />
+        </TopSection>
+        <Box
+          sx={{
+            height: "calc(100% - 80px)",
+          }}
+        >
+          <Box pt={1}>
+            <SidebarMenu />
+          </Box>
+        </Box>
+      </SidebarWrapper>
+      <Drawer
+        sx={{
+          display: { lg: "none", xs: "inline-block" },
+        }}
+        anchor={theme.direction === "rtl" ? "right" : "left"}
+        open={sidebarToggle}
+        onClose={closeSidebar}
+        variant="temporary"
+        elevation={9}
+      >
+        <SidebarWrapper>
+          <TopSection>
+            <Logo />
+          </TopSection>
+          <SidebarMenu />
+        </SidebarWrapper>
+      </Drawer>
     </>
   );
 }
 
-export default SidebarMenu;
+export default Sidebar;
