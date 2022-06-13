@@ -52,18 +52,8 @@ export const initializeFirebase = (dispatch: any) => {
           isAuthenticated: true,
           user: {
             id: user.uid,
-            jobtitle: "Lead Developer",
-            avatar: user.photoURL,
             email: user.email,
             name: user.displayName || user.email,
-            role: "admin",
-            location: "San Francisco, USA",
-            username: "admin",
-            posts: "4",
-            coverImg: "http://lorempixel.com/640/480/cats",
-            followers: "5684",
-            description:
-              "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
           },
         })
       );
