@@ -4,6 +4,7 @@ import CloseTwoToneIcon from "@mui/icons-material/CloseTwoTone";
 import Logo from "../../components/Logo/Logo";
 import { useDispatch, useSelector } from "../../store";
 import { toggleSidebar } from "../../slices/sidebar";
+import { AppState } from "../../types/AppState";
 
 import Menu from "./Menu";
 import Userbox from "./Userbox";
@@ -20,7 +21,7 @@ const HeaderWrapper = styled(Box)(
 );
 
 function Header() {
-  const { sidebarToggle } = useSelector((state: any) => state.sidebar);
+  const { sidebarToggle } = useSelector((state: AppState) => state.sidebar);
   const dispatch = useDispatch();
 
   const handleToggleSidebar = () => {

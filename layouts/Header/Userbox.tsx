@@ -15,14 +15,13 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import InboxTwoToneIcon from "@mui/icons-material/InboxTwoTone";
 import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
 import AccountBoxTwoToneIcon from "@mui/icons-material/AccountBoxTwoTone";
 import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone";
 import AccountTreeTwoToneIcon from "@mui/icons-material/AccountTreeTwoTone";
 
 const UserBoxButton = styled(Button)(
-  ({ theme }) => `
+  ({ theme }: any) => `
     padding: ${theme.spacing(0, 0.5)};
     height: ${theme.spacing(6)};
 `
@@ -92,9 +91,6 @@ function HeaderUserbox() {
         >
           <UserBoxText>
             <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
-            <UserBoxDescription variant="body2">
-              {user.jobtitle}
-            </UserBoxDescription>
           </UserBoxText>
         </Box>
         <Box
@@ -130,11 +126,11 @@ function HeaderUserbox() {
           }}
           display="flex"
         >
-          <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+          <Avatar variant="rounded" alt={user.name} src={user.name} />
           <UserBoxText>
             <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
             <UserBoxDescription variant="body2">
-              {user.phone}
+              {user.email}
             </UserBoxDescription>
           </UserBoxText>
         </MenuUserBox>
@@ -154,33 +150,23 @@ function HeaderUserbox() {
               handleClose();
             }}
             button
-            to={`/${router.pathname.split("/")[1]}/management/users/single/1`}
+            to={`/`}
             component={NavLink}
           >
             <AccountBoxTwoToneIcon fontSize="small" />
-            <ListItemText primary={"Profile"} />
+            <ListItemText primary={"Profil"} />
           </ListItem>
+
           <ListItem
             onClick={() => {
               handleClose();
             }}
             button
-            to={`/${router.pathname.split("/")[1]}/applications/mailbox/inbox`}
-            component={NavLink}
-          >
-            <InboxTwoToneIcon fontSize="small" />
-            <ListItemText primary={"Inbox"} />
-          </ListItem>
-          <ListItem
-            onClick={() => {
-              handleClose();
-            }}
-            button
-            to={`/${router.pathname.split("/")[1]}/applications/projects-board`}
+            to={`/`}
             component={NavLink}
           >
             <AccountTreeTwoToneIcon fontSize="small" />
-            <ListItemText primary={"Projects"} />
+            <ListItemText primary={"Articles"} />
           </ListItem>
         </List>
         <Divider />

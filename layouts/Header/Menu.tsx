@@ -84,28 +84,6 @@ function HeaderMenu() {
           <ListItem
             classes={{ root: "MuiListItem-indicators" }}
             button
-            component={NavLink}
-            to={`/${location.pathname.split("/")[1]}/management/users`}
-          >
-            <ListItemText
-              primaryTypographyProps={{ noWrap: true }}
-              primary={"Users"}
-            />
-          </ListItem>
-          <ListItem
-            classes={{ root: "MuiListItem-indicators" }}
-            button
-            component={NavLink}
-            to={`/${router.pathname.split("/")[1]}/dashboards/banking`}
-          >
-            <ListItemText
-              primaryTypographyProps={{ noWrap: true }}
-              primary={"Banking"}
-            />
-          </ListItem>
-          <ListItem
-            classes={{ root: "MuiListItem-indicators" }}
-            button
             ref={ref}
             onClick={handleOpen}
           >
@@ -113,7 +91,7 @@ function HeaderMenu() {
               primaryTypographyProps={{ noWrap: true }}
               primary={
                 <Box display="flex" alignItems="center">
-                  {"Help"}
+                  Aide
                   <Box display="flex" alignItems="center" pl={0.3}>
                     <ExpandMoreTwoToneIcon fontSize="small" />
                   </Box>
@@ -129,14 +107,14 @@ function HeaderMenu() {
         onClose={handleClose}
         open={isOpen}
       >
-        <MenuItem component={NavLink} to="/overview">
-          {"Features tour"}
+        <MenuItem component={NavLink} to="/">
+          Lorem..............
         </MenuItem>
-        <MenuItem component={NavLink} to="/docs/introduction">
-          {"Getting started guide"}
+        <MenuItem component={NavLink} to="/">
+          Lorem..............
         </MenuItem>
-        <MenuItem component={NavLink} to="/docs/contact-support">
-          {"Contact support"}
+        <MenuItem component={NavLink} to="/">
+          Lorem..............
         </MenuItem>
       </Menu>
     </>

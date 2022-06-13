@@ -21,7 +21,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import Logo from "../../Logo/Logo";
 import CheckTwoToneIcon from "@mui/icons-material/CheckTwoTone";
 import { useDispatch } from "../../../store/index";
-
 import { changeRoute } from "../../../slices/auth";
 
 const Transition: any = forwardRef(function Transition(props, ref) {
